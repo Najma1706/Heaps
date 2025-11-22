@@ -1,0 +1,49 @@
+In a futuristic city, Prime City, only residents with prime-numbered ID cards are allowed access to the city's high-security zones. The city uses an AI-based system that generates a list of prime ID numbers less than a given threshold using the Sieve of Sundaram algorithm.
+
+The security department is upgrading the system and needs a tool that generates all prime ID numbers less than or equal to a given number N using the Sieve of Sundaram.
+
+Your task is to help build this tool by writing a program that applies the Sieve of Sundaram technique to generate all such prime numbers.
+
+Input format :
+The first line of input contains an integer N,where N is the maximum limit for the prime ID numbers to be generated.
+
+Output format :
+The output prints all prime numbers less than or equal to N, in ascending order, separated by a space.
+
+
+
+Refer to the sample output for formatting specifications.
+
+Code constraints :
+1 ≤ N ≤ 106
+
+Sample test cases :
+Input 1 :
+2
+Output 1 :
+2 
+Input 2 :
+10
+Output 2 :
+2 3 5 7 
+
+#include <iostream>
+#include <vector>
+using namespace std;
+int main() {
+    int n; //20
+    cin>>n;
+    int num=n/2;// 10
+    vector<bool> mark(num+1,false);
+    for(int i=1; i<=num; i++) {
+        for(int j=i; i+j+2*i*j<=num; j++) {
+            mark[i+j+2*j*i]=true;
+        }
+    }
+    cout<<2<<" ";
+    for(int i=1; i<=num; i++) {
+        if(!mark[i] && i*2+1<=n){
+            cout<<i*2+1<<" ";
+        }
+    }
+}
