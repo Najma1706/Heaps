@@ -1,0 +1,84 @@
+Problem Statement
+In a warehouse inventory system, a supervisor must manage the weights of parcels arriving at the facility. Each parcel weight is a positive integer. To efficiently prioritize lighter parcels, the supervisor uses a Min Heap to store the weights. Additionally, the supervisor must calculate the average weight of all parcels and display it with two decimal precision.
+
+
+
+Write a program to assist the supervisor with the following tasks:
+
+Accept an integer n, representing the total number of parcels.
+For each parcel, process its weight. If the weight is a positive integer, add it to the Min Heap and update the total weight sum.
+Display the contents of the Min Heap after all valid weights have been added.
+Calculate and display the average weight of the parcels, formatted to two decimal places. If no valid weights are provided, output "No valid weight".
+Input format :
+The first line contains an integer n, representing the number of parcels.
+
+The second line contains n space-separated integers, representing the weights of the parcels.
+
+Output format :
+The first line prints the elements of the Min Heap, separated by spaces.
+
+The second line displays the average weight of the parcels as a double value, formatted to two decimal places.
+
+If no valid weights are provided, output "No valid weight".
+
+
+
+Refer to the sample output for the formatting specifications.
+
+Code constraints :
+1 ≤ n ≤ 10
+
+1 ≤ parcel weights ≤ 50
+
+Sample test cases :
+Input 1 :
+5
+3 9 2 6 8
+Output 1 :
+2 6 3 9 8 
+5.60
+Input 2 :
+6
+25 15 17 -32 -23 5
+Output 2 :
+5 15 17 25 
+15.50
+Input 3 :
+4
+-2 -3 -4 -5
+Output 3 :
+No valid weight
+
+#include <iostream>
+#include <vector>
+#include <iomanip>
+using namespace std;
+void heapifyup(vector<int> &heap,int i) {
+    while(i!=0 && heap[i]<heap[(i-1)/2]) {
+        swap(heap[i],heap[(i-1)/2]);
+        i=(i-1)/2;
+    }
+}
+int main() {
+    int n;
+    cin>>n;
+    vector<int> heap;
+    float sum=0.0;
+    int count=0;
+    for(int i=0; i<n; i++) {
+        int w;
+        cin>>w;
+        if(w>0){
+        heap.push_back(w);
+        sum+=w;
+        count++;
+    heapifyup(heap,heap.size()-1);
+        }
+    }
+    if(count==0){
+        cout<<"No valid weight";
+        return 0;
+    }
+    for(int x:heap) cout<<x<<" ";
+    cout<<endl<<fixed<<setprecision(2)<<sum/count;
+}
