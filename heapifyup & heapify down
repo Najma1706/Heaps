@@ -1,0 +1,86 @@
+Emma is designing a task scheduling system that prioritizes tasks using a Min Heap. The system must:
+
+
+
+Build a Min Heap based on user-provided task priorities.
+Calculate twice the priority of the root task.
+Remove all tasks with priorities less than twice the root task’s priority.
+Display the remaining tasks while ensuring the Min Heap property is preserved (Level order traversal).
+Input format :
+The first line contains an integer n, representing the number of tasks prioritized in the Min Heap.
+
+The second line contains n space-separated integers, representing the priority levels of the tasks to be added to the Min Heap.
+
+Output format :
+The output is a single line containing the remaining task priorities in the Min Heap after removing tasks with priorities less than twice the root task’s priority, separated by a space.
+
+
+
+Refer to the sample output for the formatting specifications.
+
+Code constraints :
+1 ≤ n ≤ 20
+
+1 ≤ priority values ≤ 1000
+
+Sample test cases :
+Input 1 :
+7
+4 8 6 15 12 10 14
+Output 1 :
+8 10 12 15 14 
+Input 2 :
+4
+2 4 3 6
+Output 2 :
+4 6  
+
+  // You are using GCC
+#include <iostream>
+#include <vector>
+#include <iomanip>
+using namespace std;
+void heapifyd(vector<int> &heap,int i,int n) {
+   int p=i;
+   int l=i*2+1;
+   int r=i*2+2;
+   if(l<n && heap[p]>heap[l]) p=l;
+   if(r<n && heap[p]>heap[r]) p=r;
+   if(p!=i){
+       swap(heap[i],heap[p]);
+       heapifyd(heap,p,n);
+   }
+}
+void heapifyup(vector<int> &heap,int i){
+    while(i!=0 && heap[i]<heap[(i-1)/2]) {
+        swap(heap[i],heap[(i-1)/2]);
+        i=(i-1)/2;
+    }
+}
+int main() {
+    int n;
+    cin>>n;
+    vector<int> heap;
+   
+    for(int i=0; i<n; i++) {
+        int w;
+        cin>>w;
+        
+        heap.push_back(w);
+        heapifyup(heap,i);
+        
+        }
+        int twice=2*heap[0];
+        vector <int> updated;
+        for(int i=0; i<n; i++) {
+            if(heap[i]>=twice) {
+                updated.push_back(heap[i]);
+                
+            }
+        }
+        int size=updated.size();
+        for(int i=size/2-1; i>=0; i--)
+    heapifyd(updated,i,size);
+    
+    for(int x:updated) cout<<x<<" ";
+}
