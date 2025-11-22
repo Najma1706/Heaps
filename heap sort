@@ -1,0 +1,74 @@
+
+Neha, a computer scientist, is working on efficient text processing for search engines. She has a list of words in random order and needs to sort them in lexicographic order using Heap Sort to improve search performance.
+
+
+
+Help Neha implement Heap Sort to arrange the words in lexicographic order efficiently.
+
+Input format :
+The first line consists of an integer N denoting the number of strings.
+
+The next line consists of N﻿ space-separated strings.
+
+Output format :
+The output displays N space-separated sorted strings in lexicographic order.
+
+
+
+Refer to the sample output for the formatting specifications.
+
+Code constraints :
+The given test cases fall under the following specifications:
+
+1 ≤ N ≤ 20
+
+All strings contain only lowercase and uppercase English letters.
+
+Sample test cases :
+Input 1 :
+10
+banana pineapple mango chikoo jack star guava lemon tomato orange
+Output 1 :
+banana chikoo guava jack lemon mango orange pineapple star tomato 
+Input 2 :
+6
+kiwi grape fig Date apple Banana
+Output 2 :
+Banana Date apple fig grape kiwi 
+
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+void heapifydown(vector<string> &heap,int i,int n){
+    int p=i;
+    int l=i*2+1;
+    int r=i*2+2;
+    if(l<n && heap[p]<heap[l]) p=l;
+    if(r<n && heap[p]<heap[r]) p=r;
+    if(p!=i){
+        swap(heap[p],heap[i]);
+        heapifydown(heap,p,n);
+    }
+}
+void heapsort(vector<string> &heap, int n){
+    for(int i=n-1; i>=0; i--) {
+        swap(heap[0],heap[i]);
+        heapifydown(heap,0,i);
+    }
+}
+int main() {
+    int n;
+    cin>>n;
+    vector<string> maxheap;
+    for(int i=0; i<n; i++) {
+        string s;
+        cin>>s;
+        maxheap.push_back(s);
+    }
+    for(int i=(n-1)/2; i>=0; i--){
+        heapifydown(maxheap,i,n);
+    }
+    heapsort(maxheap,n);
+    for(string x:maxheap) cout<<x<<" ";
+ }
